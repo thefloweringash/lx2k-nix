@@ -1,0 +1,131 @@
+#+TITLE: NixOS on the HoneyComb / ClearFog LX2k
+
+* Overview
+
+This is the minimal viable configuration: vendor bootloader and NixOS
+image with vendor kernel but buildable with Nix.
+
+* Usage
+
+To boot this configuration, you require a microSD card for uboot, and
+USB (or similar) storage for NixOS. This is required due to the
+write-enable line floating on the hardware which prevents writing to
+the microSD slot, and NixOS's sdImage assuming the device it boots
+from is writeable.
+
+** Build and write the sdImage to USB
+
+#+BEGIN_SRC sh
+  # Build the sdImage
+  nix-build release.nix -A sdImage -o sdImage
+
+  # Write to storage
+  cat sdImage/sd-image/*.img > /dev/$usb
+#+END_SRC
+
+** Build and write the bootloader to microSD
+
+#+BEGIN_SRC sh
+  # Build the uboot image
+  nix-build release.nix -A ubootImage -o ubootImage
+
+  # Write to microSD storage
+  cat ubootImage/*.img > /dev/$microSD
+#+END_SRC
+
+The default memory speed is 3200mhz. If your memory is slower, you
+will need to specify a compatible speed with:
+#+BEGIN_SRC sh
+  # Build the uboot image
+  nix-build release.nix -A ubootImage -o ubootImage --arg ddrSpeed 2600
+#+END_SRC
+** Insert both images and boot
+
+Note that uboot from upstream has some issues and
+incompatibilities. Interrupt the boot when prompted, and update the
+environment before proceeding.
+
+*** ramdisk_addr_r unset
+
+This causes ramdisk loading to fail. Set this explicitly via =setenv=
+
+#+BEGIN_EXAMPLE
+  setenv ramdisk_addr_r 83900000
+#+END_EXAMPLE
+
+*** fdtfile unset
+
+This allows the usage of =FDTDIR= in extlinux.conf, and should be set via
+
+#+BEGIN_EXAMPLE
+  setenv fdtfile freescale/fsl-lx2160a-cex7.dtb
+#+END_EXAMPLE
+
+*** scriptaddr leaves 4k for extlinux.conf
+
+This is very easy to overrun in NixOS, and results in the ethernet
+firmware failing to load. The vendor uboot configuration allows 4K,
+while the recomended value for this is 1MB.
+
+#+BEGIN_EXAMPLE
+  setenv scriptaddr 0x83800000
+#+END_EXAMPLE
+
+*** bonus: boot_targets
+
+This can be set to only scan the device you want to boot.
+
+#+BEGIN_EXAMPLE
+  setenv boot_targets nvme0
+#+END_EXAMPLE
+
+*** Full example of booting from the nvme storage
+
+#+BEGIN_EXAMPLE
+  setenv scriptaddr 0x83800000
+  setenv ramdisk_addr_r 83900000
+  setenv fdtfile freescale/fsl-lx2160a-cex7.dtb
+  setenv boot_targets nvme0
+#+END_EXAMPLE
+
+*** Good luck!
+
+* Notes
+
+*** make menuconfig
+
+Requires some dependencies:
+
+#+BEGIN_SRC sh
+  nix-shell -E 'with (import <nixpkgs> {}); stdenv.mkDerivation { name = "fake"; nativeBuildInputs = [ ncurses pkgconfig bison flex ]; }'
+
+  export NIX_CFLAGS_LINK=$(pkg-config --libs ncurses)
+#+END_SRC
+
+* Future work
+
+** TODO Make a squashfs image
+
+Distributing disk images is strange, especialy when devices have
+onboard emmc, sata, usb and nvme. A squashfs image would boot from
+read-only media and allow =nixos-install= onto their desired target.
+
+It's also much smaller.
+
+** TODO uefi support
+
+The source repo has uefi build scripts, which were completely ignored.
+
+** TODO Improve self-hosting
+
+Determine which of =boot.kernelParams= are important and move them to
+a module that can be included by installed systems.
+
+Why is 2gb of memory allocated to huge pages?
+
+* LICENSE
+
+This repo is a port of [[https://github.com/SolidRun/lx2160a_build][Solidrun/lx2160a_build]], and has a copy of the
+patches from that repository, it is subject to the same
+conditions. Anything original to this repository is available under
+the same conditions as nixpkgs for ease of upstreaming.
