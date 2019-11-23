@@ -1,0 +1,12 @@
+--- u-boot/include/configs/lx2160acex7.h	2019-11-23 23:35:27.317095307 +0900
++++ u-boot-fixed/include/configs/lx2160acex7.h	2019-11-23 23:36:21.176004486 +0900
+@@ -64,6 +64,9 @@
+ /* Initial environment variables */
+ #define CONFIG_EXTRA_ENV_SETTINGS		\
+ 	EXTRA_ENV_SETTINGS			\
++	"fdtfile=freescale/fsl-lx2160a-cex7.dtb\0"		\
++	"ramdisk_addr_r=83900000\0"		\
++	"scriptaddr=83800000\0"		\
+ 	"lx2160acex7_vdd_mv=800\0"		\
+ 	"BOARD=lx2160acex7\0"			\
+ 	"xspi_bootcmd=echo Trying load from flexspi..;"		\

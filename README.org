@@ -42,8 +42,8 @@ will need to specify a compatible speed with:
 ** Insert both images and boot
 
 Note that uboot from upstream has some issues and
-incompatibilities. Interrupt the boot when prompted, and update the
-environment before proceeding.
+incompatibilities. *These have been patched into the uboot
+configuration, so everything should work with no additional effort.*
 
 *** ramdisk_addr_r unset
 

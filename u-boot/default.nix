@@ -19,5 +19,7 @@ buildUBoot {
     ../patches/u-boot/0006-armv8-lx2160acex7-board-support-files.patch
     ../patches/u-boot/0007-load-dpl-into-0x80001000-instead-of-0x80d00000.patch
     ../patches/u-boot/0008-uboot-add-nvme-commands-and-for-distroboot.patch
+
+    ./fix-defaults.patch
   ];
 }
