@@ -19,6 +19,12 @@ buildUBoot {
     ../patches/u-boot/0006-armv8-lx2160acex7-board-support-files.patch
     ../patches/u-boot/0007-load-dpl-into-0x80001000-instead-of-0x80d00000.patch
     ../patches/u-boot/0008-uboot-add-nvme-commands-and-for-distroboot.patch
+    ../patches/u-boot/0009-armv8-lx2160acex7-Fix-booting-from-NVMe-drives.patch
+    ../patches/u-boot/0010-nvme-Fix-warning-of-cast-from-pointer-to-integer-of-.patch
+    ../patches/u-boot/0011-nvme-Fix-PRP-Offset-Invalid.patch
+    ../patches/u-boot/0012-nvme-add-accessor-to-namespace-id-and-eui64.patch
+    ../patches/u-boot/0013-nvme-flush-dcache-on-both-r-w-and-the-prp-list.patch
+    ../patches/u-boot/0014-nvme-use-page-aligned-buffer-for-identify-command.patch
 
     ./fix-defaults.patch
   ];

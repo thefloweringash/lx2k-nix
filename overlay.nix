@@ -1,10 +1,17 @@
 self: super: {
   linux_lx2k = super.callPackage ./linux_lx2k {
-    kernelPatches = self.linux_4_19.kernelPatches ++ [
-      { name = "upstream-1"; patch = ./patches/linux/0001-arm64-dts-lx2160a-add-lx2160acex7-device-tree-build.patch; }
-      { name = "upstream-2"; patch = ./patches/linux/0002-arm64-dts-lx2160a-add-lx2160acex7-device-tree.patch; }
-      { name = "upstream-3"; patch = ./patches/linux/0003-arm64-dts-lx2160a-misc-fixes.patch; }
-    ];
+    kernelPatches = self.linux_4_19.kernelPatches ++ (
+      map (p: {
+        name = builtins.baseNameOf p;
+        patch = p;
+      }) [
+        ./patches/linux/0001-arm64-dts-lx2160a-add-lx2160acex7-device-tree-build.patch
+        ./patches/linux/0002-arm64-dts-lx2160a-add-lx2160acex7-device-tree.patch
+        ./patches/linux/0003-arm64-dts-lx2160a-misc-fixes.patch
+        ./patches/linux/0004-pci-accept-pcie-base-class-id-0x0.patch
+        ./patches/linux/0005-arm64-dts-lx2160a-cex7-add-ltc3882-support.patch
+      ]
+    );
   };
 
   linuxPackages_lx2k = self.linuxPackagesFor self.linux_lx2k;
