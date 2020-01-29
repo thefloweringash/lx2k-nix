@@ -45,7 +45,7 @@ runCommand "uboot-image" {
   # DPAA1 FMAN ucode at 0x4800
 
   # DPAA2-MC at 0x5000
-  copyto 0x5000 ${qoriq-mc-bin}/lx2160a/mc_10.16.2_lx2160a.itb
+  copyto 0x5000 ${qoriq-mc-bin}/lx2160a/mc_10.18.0_lx2160a.itb
 
   # DPAA2 DPL at 0x6800
   copyto 0x6800 ${mc-utils}/config/lx2160a/CEX7/${dpl}

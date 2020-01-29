@@ -15,12 +15,12 @@ in
 
 stdenv.mkDerivation rec {
   pname = "atf";
-  version = "LSDK-19.06";
+  version = "LSDK-19.09";
 
   src = fetchgit {
     url = "https://source.codeaurora.org/external/qoriq/qoriq-components/atf";
     rev = "refs/tags/${version}";
-    sha256 = "1lffm6x5sfhpj659ib95jm651qdzzsf7yyfy62jr3fwlfqrpyk33";
+    sha256 = "1jskw423il746pr1aaw4d2m2s0hg9f3fw4zir950alwvy1a4a8bd";
   };
 
   patches = [

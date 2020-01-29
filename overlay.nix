@@ -7,9 +7,9 @@ self: super: {
       }) [
         ./patches/linux/0001-arm64-dts-lx2160a-add-lx2160acex7-device-tree-build.patch
         ./patches/linux/0002-arm64-dts-lx2160a-add-lx2160acex7-device-tree.patch
-        ./patches/linux/0003-arm64-dts-lx2160a-misc-fixes.patch
         ./patches/linux/0004-pci-accept-pcie-base-class-id-0x0.patch
         ./patches/linux/0005-arm64-dts-lx2160a-cex7-add-ltc3882-support.patch
+        ./patches/linux/0006-arm64-dts-lx2160a-cex7-add-on-module-eeproms.patch
       ]
     );
   };

@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation rec {
   pname = "mc-utils";
-  version = "LSDK-19.06";
+  version = "LSDK-19.09";
 
   src = fetchgit {
     url = "https://source.codeaurora.org/external/qoriq/qoriq-components/${pname}";
     rev = version;
-    sha256 = "10akc3x24af8x1zq1bfg6rq32gy2aax13zg2hn72qpacwkf11791";
+    sha256 = "0xljcnzqhd233h21q1rgndj1wh1ybyw1xw4f9k9gs2mn7inlsg6n";
   };
 
   patches = [

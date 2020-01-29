@@ -1,13 +1,13 @@
-{ stdenv, lib, fetchgit, python2 }:
+{ stdenv, lib, fetchgit, python3 }:
 
 stdenv.mkDerivation rec {
   pname = "rcw";
-  version = "LSDK-19.06";
+  version = "LSDK-19.09";
 
   src = fetchgit {
     url = "https://source.codeaurora.org/external/qoriq/qoriq-components/rcw";
     rev = "refs/tags/${version}";
-    sha256 = "1wv8ml13ylm66f8rfni2nk0pijcnywbd0pd1fj3q43a17h652lw2";
+    sha256 = "1c36p2r2pldzakqqjrxwnil6637nsccdfc7sh1bq29b6l8s8z37g";
   };
 
   patches = [
@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     ../patches/rcw/0003-S2-enable-gen3-xspi-increase-divisor-to-28.patch
   ];
 
-  nativeBuildInputs = [ python2 ];
+  nativeBuildInputs = [ python3 ];
 
   preBuild = ''
     cd lx2160acex7

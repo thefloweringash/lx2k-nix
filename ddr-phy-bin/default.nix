@@ -2,7 +2,7 @@
 
 stdenv.mkDerivation rec {
   name = "ddr-phy-bin";
-  version = "LSDK-19.06";
+  version = "LSDK-19.09";
 
   src = fetchFromGitHub {
     owner = "NXP";

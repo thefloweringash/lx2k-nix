@@ -12,12 +12,12 @@ let
 
     src = fetchgit {
       url = "https://source.codeaurora.org/external/qoriq/qoriq-components/linux";
-      rev = "33f2c86df727a5651c22329265704adfa3518549";
-      sha256 = "1b2myggckk0l5r3nvjjc5z9n72ghnz245p1dl1mbjp04m9m9az1a";
+      rev = "LSDK-19.09-V4.19";
+      sha256 = "03ckcl8sfrmm0305j15i2bxyg4yhnwz5a8i5hcxb4l9gb0j1crv6";
     };
 
-    version = "4.19.46";
-    modDirVersion = "4.19.46";
+    version = "4.19.68";
+    modDirVersion = "4.19.68";
 
     configfile = ./config;
 
