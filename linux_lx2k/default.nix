@@ -1,4 +1,4 @@
-{ stdenv, runCommand, fetchgit, linuxManualConfig,
+{ stdenv, lib, runCommand, fetchgit, linuxManualConfig,
   features ? {}, kernelPatches ? [], randstructSeed ? null }:
 
 # Additional features cannot be added to this kernel
@@ -8,7 +8,7 @@ let
   passthru = { features = {}; };
 
   drv = linuxManualConfig ({
-    inherit stdenv kernelPatches;
+    inherit stdenv lib kernelPatches;
 
     src = fetchgit {
       url = "https://source.codeaurora.org/external/qoriq/qoriq-components/linux";
@@ -22,8 +22,8 @@ let
     configfile = ./config;
 
     allowImportFromDerivation = true; # Let nix check the assertions about the config
-  } // stdenv.lib.optionalAttrs (randstructSeed != null) { inherit randstructSeed; });
+  } // lib.optionalAttrs (randstructSeed != null) { inherit randstructSeed; });
 
 in
 
-stdenv.lib.extendDerivation true passthru drv
+lib.extendDerivation true passthru drv
