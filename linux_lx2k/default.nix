@@ -8,7 +8,7 @@ let
   passthru = { features = {}; };
 
   drv = linuxManualConfig ({
-    inherit stdenv lib kernelPatches;
+    inherit stdenv kernelPatches;
 
     src = fetchgit {
       url = "https://source.codeaurora.org/external/qoriq/qoriq-components/linux";
@@ -22,7 +22,8 @@ let
     configfile = ./config;
 
     allowImportFromDerivation = true; # Let nix check the assertions about the config
-  } // lib.optionalAttrs (randstructSeed != null) { inherit randstructSeed; });
+  } // lib.optionalAttrs (randstructSeed != null) { inherit randstructSeed; }
+    // lib.optionalAttrs (lib.versionAtLeast lib.version "21.05") { inherit lib; });
 
 in
 
